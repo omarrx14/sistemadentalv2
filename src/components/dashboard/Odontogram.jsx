@@ -91,33 +91,35 @@ const Odontogram = () => {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-around py-4">
-        {/* Top Row */}
-        <div className="grid grid-cols-8 gap-x-2 gap-y-6 justify-items-center">
-          {topTeeth.map((tooth) => (
-            <button
-              key={tooth.id}
-              onClick={() => handleToothClick(patient.id, tooth.id, tooth.status)}
-              className="hover:scale-110 transition-transform"
-            >
-              <ToothIcon id={tooth.id} status={tooth.status} />
-            </button>
-          ))}
-        </div>
+      <div className="flex-1 flex flex-col justify-around py-4 overflow-x-auto">
+        <div className="min-w-[600px] lg:min-w-0">
+          {/* Top Row */}
+          <div className="grid grid-cols-8 gap-x-2 gap-y-6 justify-items-center mb-12">
+            {topTeeth.map((tooth) => (
+              <button
+                key={tooth.id}
+                onClick={() => handleToothClick(patient.id, tooth.id, tooth.status)}
+                className="hover:scale-110 transition-transform"
+              >
+                <ToothIcon id={tooth.id} status={tooth.status} />
+              </button>
+            ))}
+          </div>
 
-        <div className="h-px bg-slate-100 w-full my-4"></div>
+          <div className="h-px bg-slate-100 w-full my-8"></div>
 
-        {/* Bottom Row */}
-        <div className="grid grid-cols-8 gap-x-2 gap-y-6 justify-items-center">
-          {bottomTeeth.map((tooth) => (
-            <button
-              key={tooth.id}
-              onClick={() => handleToothClick(patient.id, tooth.id, tooth.status)}
-              className="hover:scale-110 transition-transform"
-            >
-              <ToothIcon id={tooth.id} status={tooth.status} />
-            </button>
-          ))}
+          {/* Bottom Row */}
+          <div className="grid grid-cols-8 gap-x-2 gap-y-6 justify-items-center">
+            {bottomTeeth.map((tooth) => (
+              <button
+                key={tooth.id}
+                onClick={() => handleToothClick(patient.id, tooth.id, tooth.status)}
+                className="hover:scale-110 transition-transform"
+              >
+                <ToothIcon id={tooth.id} status={tooth.status} />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
