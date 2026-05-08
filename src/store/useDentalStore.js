@@ -104,6 +104,14 @@ export const useDentalStore = create(
         }]
       })),
 
+      addAppointment: (appointment) => set((state) => ({
+        appointments: [...state.appointments, { 
+          ...appointment, 
+          id: Date.now().toString(),
+          status: 'Pendiente'
+        }]
+      })),
+
       updateAppointmentStatus: (id, status) => set((state) => ({
         appointments: state.appointments.map(apt => apt.id === id ? { ...apt, status } : apt)
       })),
