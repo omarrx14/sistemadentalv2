@@ -44,7 +44,23 @@ export const useDentalStore = create(
       { id: '2', patientId: '2', amount: 450, date: '2024-04-28', concept: 'Tratamiento Conducto', status: 'Pendiente' },
     ],
 
+    addClinicalNote: (patientId, observation) => set((state) => ({
+      patients: state.patients.map(p => {
+        if (p.id === patientId) {
+          return {
+            ...p,
+            history: [
+              { date: new Date().toISOString().split('T')[0], observation },
+              ...p.history
+            ]
+          };
+        }
+        return p;
+      })
+    })),
+
     addPayment: (payment) => set((state) => ({
+
       payments: [...state.payments, { ...payment, id: Date.now().toString() }]
     })),
 

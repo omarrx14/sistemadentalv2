@@ -6,6 +6,7 @@ import Agenda from './components/dashboard/Agenda';
 import Odontogram from './components/dashboard/Odontogram';
 import PatientList from './components/patients/PatientList';
 import PatientForm from './components/patients/PatientForm';
+import ClinicalNotes from './components/patients/ClinicalNotes';
 import FinanceModule from './components/finance/FinanceModule';
 import SettingsModule from './components/settings/SettingsModule';
 import AgendaModule from './components/agenda/AgendaModule';
@@ -37,11 +38,10 @@ function App() {
               <PatientList />
             </div>
             <div className="lg:col-span-8">
-              <div className="h-[calc(100vh-12rem)] overflow-y-auto pr-2">
+              <div className="h-[calc(100vh-12rem)] overflow-y-auto pr-2 space-y-8">
                 <PatientForm />
-                <div className="mt-8">
-                  <Odontogram />
-                </div>
+                <ClinicalNotes />
+                <Odontogram />
               </div>
             </div>
           </div>
