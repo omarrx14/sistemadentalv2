@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDentalStore } from '../../store/useDentalStore';
-import { Save, User, Phone, Mail, Calendar, Info } from 'lucide-react';
+import { Save, User, Phone, Mail, Calendar, Info, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
 const PatientForm = () => {
@@ -13,7 +13,9 @@ const PatientForm = () => {
     gender: 'M',
     phone: '',
     email: '',
-    status: 'Activo'
+    status: 'Activo',
+    motivo: '',
+    antecedentes: ''
   });
 
   useEffect(() => {
@@ -24,7 +26,9 @@ const PatientForm = () => {
         gender: patient.gender,
         phone: patient.phone,
         email: patient.email,
-        status: patient.status
+        status: patient.status,
+        motivo: patient.motivo || '',
+        antecedentes: patient.antecedentes || ''
       });
     } else if (selectedPatientId === 'new') {
       setFormData({
@@ -33,7 +37,9 @@ const PatientForm = () => {
         gender: 'M',
         phone: '',
         email: '',
-        status: 'Activo'
+        status: 'Activo',
+        motivo: '',
+        antecedentes: ''
       });
     }
   }, [patient, selectedPatientId]);
@@ -52,19 +58,20 @@ const PatientForm = () => {
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8 h-full overflow-y-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="font-bold text-dark text-xl">Historia Clínica</h2>
-          <p className="text-sm text-slate-500">Información detallada del paciente</p>
+          <h2 className="font-bold text-dark text-xl">Ficha del Paciente</h2>
+          <p className="text-sm text-slate-500">Expediente clínico completo</p>
         </div>
         <button 
           onClick={handleSubmit}
           className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-md shadow-primary/20"
         >
           <Save size={18} />
-          <span>Guardar Cambios</span>
+          <span>Guardar Expediente</span>
         </button>
       </div>
 
-      <form className="space-y-8">
+      <form className="space-y-10">
+        {/* Datos Personales */}
         <section>
           <h3 className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">
             <User size={16} />
@@ -107,10 +114,39 @@ const PatientForm = () => {
           </div>
         </section>
 
+        {/* Anamnesis / Dolencias */}
+        <section>
+          <h3 className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">
+            <FileText size={16} />
+            Anamnesis y Dolencias
+          </h3>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-500 ml-1">Motivo de Consulta / Dolencias Actuales</label>
+              <textarea 
+                value={formData.motivo}
+                onChange={(e) => setFormData({...formData, motivo: e.target.value})}
+                className="w-full px-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none text-dark transition-all min-h-[100px] resize-none"
+                placeholder="Describe el dolor, inflamación o motivo principal de la visita..."
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-500 ml-1">Antecedentes Médicos Relevantes</label>
+              <textarea 
+                value={formData.antecedentes}
+                onChange={(e) => setFormData({...formData, antecedentes: e.target.value})}
+                className="w-full px-4 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none text-dark transition-all min-h-[100px] resize-none"
+                placeholder="Alergias, enfermedades crónicas, cirugías previas..."
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Contacto */}
         <section>
           <h3 className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">
             <Phone size={16} />
-            Contacto
+            Información de Contacto
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -142,10 +178,11 @@ const PatientForm = () => {
           </div>
         </section>
 
+        {/* Resumen */}
         <section>
           <h3 className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">
             <Info size={16} />
-            Estado de Cuenta
+            Estado General
           </h3>
           <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -154,7 +191,7 @@ const PatientForm = () => {
               </div>
               <div>
                 <p className="text-sm font-bold text-dark">Última Visita</p>
-                <p className="text-xs text-slate-500">{patient?.lastVisit || 'N/A'}</p>
+                <p className="text-xs text-slate-500">{patient?.lastVisit || 'Nueva Alta'}</p>
               </div>
             </div>
             <div className="text-right">
